@@ -46,6 +46,17 @@ class cntl
 		//Returns controller object, takes controller number as argument
 		cntl(int);
 
+		float LX;
+		float LY;
+		float LZ;
+
+		float RX;
+		float RY;
+		float RZ;
+
+		float RTrig;
+		float LTrig;
+
 		//Should be called for each controller at the beginning of each teleop loop
 		void UpdateCntl();
 
