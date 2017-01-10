@@ -29,10 +29,11 @@ btn::btn(int button, Joystick **s) {
 
 void btn::Update() {
 	this->Hld = this->State;
-		this->State = this->raw->Grab();
-		if(this->Hld != this->State && this->Hld) {
-			this->RE = true;
-		}
+	this->State = this->raw->Grab();
+	this->RE = false;
+	if(this->Hld != this->State && !this->Hld) {
+		this->RE = true;
+	}
 }
 
 cntl::cntl(int port) {
@@ -55,5 +56,11 @@ void cntl::UpdateCntl() {
 	this->bB->Update();
 	this->bX->Update();
 	this->bY->Update();
+	this->bLB->Update();
+	this->bRB->Update();
+	this->bBack->Update();
+	this->bStart->Update();
+	this->bLS->Update();
+	this->bRS->Update();
 }
 
