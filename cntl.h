@@ -48,12 +48,8 @@ class cntl
 
 		float LX;
 		float LY;
-		float LZ;
-
 		float RX;
 		float RY;
-		float RZ;
-
 		float RTrig;
 		float LTrig;
 

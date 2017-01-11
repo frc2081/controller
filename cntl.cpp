@@ -38,6 +38,12 @@ void btn::Update() {
 
 cntl::cntl(int port) {
 	stick = new Joystick(port);
+	this->RX = 0.0;
+	this->RY = 0.0;
+	this->LX = 0.0;
+	this->LY = 0.0;
+	this->RTrig = 0.0;
+	this->LTrig = 0.0;
 
 	this->bA = new btn(1, &stick);
 	this->bB = new btn(2, &stick);
@@ -52,6 +58,13 @@ cntl::cntl(int port) {
 }
 
 void cntl::UpdateCntl() {
+	this->LX = this->stick->GetY();
+	this->LY = this->stick->GetX();
+	this->RX = this->stick->GetRawAxis(5);
+	this->RY = this->stick->GetRawAxis(4);
+	this->RTrig = this->stick->GetRawAxis(3);
+	this->LTrig = this->stick->GetRawAxis(2);
+	this->RY *= -1;
 	this->bA->Update();
 	this->bB->Update();
 	this->bX->Update();
