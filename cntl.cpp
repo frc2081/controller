@@ -6,20 +6,6 @@
  */
 #include "cntl.h"
 
-//For practicality
-enum btnNums {
-	_bA,
-	_bB,
-	_bX,
-	_bY,
-	_bLB,
-	_bRB,
-	_bBack,
-	_bStart,
-	_bLS,
-	_bRS
-};
-
 btn::btn(int button, frc::Joystick **s) {
 	M_raw = new Btn_t(*s, button);
 	Hld = false;
@@ -47,19 +33,19 @@ cntl::cntl(int port, double deadzone) {
 
 	M_deadzone = deadzone;
 
-	bA = new btn(1, &M_stick);
-	bB = new btn(2, &M_stick);
-	bX = new btn(3, &M_stick);
-	bY = new btn(4, &M_stick);
-	bLB = new btn(5, &M_stick);
-	bRB = new btn(6, &M_stick);
-	bBack = new btn(7, &M_stick);
-	bStart = new btn(8, &M_stick);
-	bLS = new btn(9, &M_stick);
-	bRS = new btn(10, &M_stick);
+	bA = new btn(_bA, &M_stick);
+	bB = new btn(_bB, &M_stick);
+	bX = new btn(_bX, &M_stick);
+	bY = new btn(_bY, &M_stick);
+	bLB = new btn(_bLB, &M_stick);
+	bRB = new btn(_bRB, &M_stick);
+	bBack = new btn(_bBack, &M_stick);
+	bStart = new btn(_bStart, &M_stick);
+	bLS = new btn(_bLS, &M_stick);
+	bRS = new btn(_bRS, &M_stick);
 }
 
-void applyDeadzone(double *var, double input, double zone) {
+double applyDeadzone(double input, double zone) {
 	double o = fabs(input) - zone;
 	o /= (1 - zone);
 	if(o < 0) {
@@ -68,16 +54,19 @@ void applyDeadzone(double *var, double input, double zone) {
 	if(input < 0) {
 		o *= -1;
 	}
-	*var = o;
+	if((o + 0.0) == 0.0) {
+		o = 0.0;
+	}
+	return o;
 }
 
 void cntl::UpdateCntl() {
-	applyDeadzone(&this->LX, M_stick->GetX(), M_deadzone);
-	applyDeadzone(&this->LY, M_stick->GetY(), M_deadzone);
-	applyDeadzone(&this->RX, M_stick->GetRawAxis(4), M_deadzone);
-	applyDeadzone(&this->RY, M_stick->GetRawAxis(5), M_deadzone);
-	applyDeadzone(&this->RTrig, M_stick->GetRawAxis(3), M_deadzone);
-	applyDeadzone(&this->LTrig, M_stick->GetRawAxis(2), M_deadzone);
+	LX = applyDeadzone(M_stick->GetX(), M_deadzone);
+	LY = applyDeadzone(M_stick->GetY(), M_deadzone);
+	RX = applyDeadzone(M_stick->GetRawAxis(4), M_deadzone);
+	RY = applyDeadzone(M_stick->GetRawAxis(5), M_deadzone);
+	RTrig = applyDeadzone(M_stick->GetRawAxis(3), M_deadzone);
+	LTrig = applyDeadzone(M_stick->GetRawAxis(2), M_deadzone);
 	RY *= -1;
 	LY *= -1;
 

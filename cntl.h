@@ -12,6 +12,20 @@
 
 #include "WPILib.h"
 
+//For changing the mapping for different controllers
+enum btnNums {
+	_bA = 1,
+	_bB = 2,
+	_bX = 3,
+	_bY = 4,
+	_bLB = 5,
+	_bRB = 6,
+	_bBack = 7,
+	_bStart = 8,
+	_bLS = 9,
+	_bRS = 10
+};
+
 typedef JoystickButton Btn_t;
 
 class btn
