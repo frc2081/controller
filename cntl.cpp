@@ -66,8 +66,9 @@ void cntl::UpdateCntl() {
 	RX = applyDeadzone(_stick->GetRawAxis(4), M_deadzone);
 	RY = applyDeadzone(_stick->GetRawAxis(5), M_deadzone);
 
-	RTrig = applyDeadzone(_stick->GetRawAxis(3), M_deadzone);
-	LTrig = applyDeadzone(_stick->GetRawAxis(2), M_deadzone);
+	//Commented for testing
+	//RTrig = applyDeadzone(_stick->GetRawAxis(3), M_deadzone);
+	//LTrig = applyDeadzone(_stick->GetRawAxis(2), M_deadzone);
 	RY *= -1;
 	LY *= -1;
 
