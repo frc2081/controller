@@ -32,15 +32,18 @@ class btn
 {
 	private:
 		//JoystickButton object
-		Btn_t *M_raw;
+		Btn_t *_raw;
+		bool _State;
+		bool _RE;
+		bool _Hld;
 
 	public:
 		//The current state of the given button
-		bool State;
+		bool State() const {return this->_State; }
 		//True if the current state is true and the last state is false
-		bool RE;
+		bool RE() const {return this->_RE; }
 		//The state of the button on the previous loop
-		bool Hld;
+		bool Hld() const {return this->_Hld; }
 
 		//Called for all buttons on a controller by calling UpdateCntl()
 		void Update();
@@ -54,7 +57,7 @@ class cntl
 {
 	private:
 		//Joystick object
-		Joystick *M_stick;
+		Joystick *_stick;
 
 		double M_deadzone;
 

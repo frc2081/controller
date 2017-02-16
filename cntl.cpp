@@ -7,23 +7,23 @@
 #include "cntl.h"
 
 btn::btn(int button, frc::Joystick **s) {
-	M_raw = new Btn_t(*s, button);
-	Hld = false;
-	State = false;
-	RE = false;
+	_raw = new Btn_t(*s, button);
+	_Hld = false;
+	_State = false;
+	_RE = false;
 }
 
 void btn::Update() {
-	Hld = State;
-	State = M_raw->Grab();
-	RE = false;
-	if(Hld != State && !Hld) {
-		RE = true;
+	_Hld = _State;
+	_State = _raw->Grab();
+	_RE = false;
+	if(_Hld != _State && !_Hld) {
+		_RE = true;
 	}
 }
 
 cntl::cntl(int port, double deadzone) {
-	M_stick = new frc::Joystick(port);
+	_stick = new frc::Joystick(port);
 	RX = 0.0;
 	RY = 0.0;
 	LX = 0.0;
@@ -33,19 +33,19 @@ cntl::cntl(int port, double deadzone) {
 
 	M_deadzone = deadzone;
 
-	bA = new btn(_bA, &M_stick);
-	bB = new btn(_bB, &M_stick);
-	bX = new btn(_bX, &M_stick);
-	bY = new btn(_bY, &M_stick);
-	bLB = new btn(_bLB, &M_stick);
-	bRB = new btn(_bRB, &M_stick);
-	bBack = new btn(_bBack, &M_stick);
-	bStart = new btn(_bStart, &M_stick);
-	bLS = new btn(_bLS, &M_stick);
-	bRS = new btn(_bRS, &M_stick);
+	bA = new btn(_bA, &_stick);
+	bB = new btn(_bB, &_stick);
+	bX = new btn(_bX, &_stick);
+	bY = new btn(_bY, &_stick);
+	bLB = new btn(_bLB, &_stick);
+	bRB = new btn(_bRB, &_stick);
+	bBack = new btn(_bBack, &_stick);
+	bStart = new btn(_bStart, &_stick);
+	bLS = new btn(_bLS, &_stick);
+	bRS = new btn(_bRS, &_stick);
 }
 
-double applyDeadzone(double input, double zone) {
+const double applyDeadzone(double input, double zone) {
 	double o = fabs(input) - zone;
 	o /= (1 - zone);
 	if(o < 0) {
@@ -61,12 +61,13 @@ double applyDeadzone(double input, double zone) {
 }
 
 void cntl::UpdateCntl() {
-	LX = applyDeadzone(M_stick->GetX(), M_deadzone);
-	LY = applyDeadzone(M_stick->GetY(), M_deadzone);
-	RX = applyDeadzone(M_stick->GetRawAxis(4), M_deadzone);
-	RY = applyDeadzone(M_stick->GetRawAxis(5), M_deadzone);
-	RTrig = applyDeadzone(M_stick->GetRawAxis(3), M_deadzone);
-	LTrig = applyDeadzone(M_stick->GetRawAxis(2), M_deadzone);
+	LX = applyDeadzone(_stick->GetX(), M_deadzone);
+	LY = applyDeadzone(_stick->GetY(), M_deadzone);
+	RX = applyDeadzone(_stick->GetRawAxis(4), M_deadzone);
+	RY = applyDeadzone(_stick->GetRawAxis(5), M_deadzone);
+
+	RTrig = applyDeadzone(_stick->GetRawAxis(3), M_deadzone);
+	LTrig = applyDeadzone(_stick->GetRawAxis(2), M_deadzone);
 	RY *= -1;
 	LY *= -1;
 
@@ -81,4 +82,3 @@ void cntl::UpdateCntl() {
 	bLS->Update();
 	bRS->Update();
 }
-
