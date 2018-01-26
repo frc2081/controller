@@ -7,3 +7,6 @@
 # Compiled Object files
 *.o
 *.a
+
+Debug/
+Release/

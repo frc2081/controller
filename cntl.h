@@ -10,20 +10,27 @@
 #ifndef CNTL_H_
 #define CNTL_H_
 
-#include "WPILib.h"
+#include <WPILib.h>
 
 //For changing the mapping for different controllers
-enum btnNums {
-	_bA = 1,
-	_bB = 2,
-	_bX = 3,
-	_bY = 4,
-	_bLB = 5,
-	_bRB = 6,
-	_bBack = 7,
-	_bStart = 8,
-	_bLS = 9,
-	_bRS = 10
+enum BTNENUMS {
+	kbA = 1,
+	kbB = 2,
+	kbX = 3,
+	kbY = 4,
+	kbLB = 5,
+	kbRB = 6,
+	kbBack = 7,
+	kbStart = 8,
+	kbLS = 9,
+	kbRS = 10
+};
+
+enum RANGELIMITS {
+	kLX = 100,
+	kLY = 100,
+	kRX = 100,
+	kRY = 100
 };
 
 typedef JoystickButton Btn_t;
@@ -33,17 +40,17 @@ class btn
 	private:
 		//JoystickButton object
 		Btn_t *_raw;
-		bool _State;
-		bool _RE;
-		bool _Hld;
+		bool _state;
+		bool _re;
+		bool _held;
 
 	public:
 		//The current state of the given button
-		bool State() const {return this->_State; }
+		bool State() const {return this->_state; }
 		//True if the current state is true and the last state is false
-		bool RE() const {return this->_RE; }
+		bool RE() const {return this->_re; }
 		//The state of the button on the previous loop
-		bool Hld() const {return this->_Hld; }
+		bool Held() const {return this->_held; }
 
 		//Called for all buttons on a controller by calling UpdateCntl()
 		void Update();
@@ -59,11 +66,12 @@ class cntl
 		//Joystick object
 		Joystick *_stick;
 
-		double M_deadzone;
+		double _deadzone;
+		double _rangelimit;
 
 	public:
 		//Returns controller object, takes controller number and deadzone(0.01 to 1) as argument
-		cntl(int, double);
+		cntl(int, double, double);
 
 		double LX;
 		double LY;
