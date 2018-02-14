@@ -11,6 +11,7 @@
  */
 
 #include "cntl.h"
+namespace cntl {
 
 btn::btn(int button, frc::Joystick **s) {
 	_raw = new Btn_t(*s, button);
@@ -49,7 +50,7 @@ cntl::cntl(int port, double deadzone, double rangelimit) {
 	bRS = new btn(kbRS, &_stick);
 }
 
-const void ApplyDeadzone(double *joystick, double input, double zone) {
+void ApplyDeadzone(double *joystick, double input, double zone) {
 	double o = fabs(input) - zone;
 	o /= (1 - zone);
 	if(o < 0) {
@@ -64,7 +65,7 @@ const void ApplyDeadzone(double *joystick, double input, double zone) {
 	*joystick = o;
 }
 
-const void ApplyLimit(double *joystick, int limit)
+void ApplyLimit(double *joystick, int limit)
 {
 	double o = (double)limit / 100.0;
 	if(*joystick > o)
@@ -95,4 +96,5 @@ void cntl::UpdateCntl() {
 	bStart->Update();
 	bLS->Update();
 	bRS->Update();
+}
 }

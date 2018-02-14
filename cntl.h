@@ -1,8 +1,11 @@
 /*
  * 	WPILib Controller library
+ * 	cntl.h
  *
  * 	Organization: FRC2081
- *  Author: Lunar Dust
+ *
+ *  @author Lunar Dust
+ *  @version 1.1 12/12/17
  *
  *  Do not redistribute this library without the permission of the author.
  */
@@ -11,7 +14,9 @@
 #define CNTL_H_
 
 #include <WPILib.h>
+#include <math.h>
 
+namespace cntl {
 //For changing the mapping for different controllers
 enum BTNENUMS {
 	kbA = 1,
@@ -95,5 +100,6 @@ class cntl
 		btn *bLS;
 		btn *bRS;
 };
+}
 
 #endif /* CNTL_H_ */
