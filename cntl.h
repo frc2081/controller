@@ -38,16 +38,14 @@ enum RANGELIMITS {
 	kRY = 100
 };
 
-typedef JoystickButton Btn_t;
-
 class btn
 {
 	private:
 		//JoystickButton object
-		Btn_t *_raw;
-		bool _state;
-		bool _re;
-		bool _held;
+		JoystickButton*_raw;
+		bool _state = false;
+		bool _re = false;
+		bool _held = false;
 
 	public:
 		//The current state of the given button

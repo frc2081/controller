@@ -14,17 +14,14 @@
 namespace cntl {
 
 btn::btn(int button, frc::Joystick **s) {
-	_raw = new Btn_t(*s, button);
-	_held = false;
-	_state = false;
-	_re = false;
+	_raw = new JoystickButton(*s, button);
 }
 
 void btn::Update() {
 	_held = _state;
 	_state = _raw->Grab();
 	_re = false;
-	if(_held != _state && !_held) {
+	if(!_held && _held != _state) {
 		_re = true;
 	}
 }
@@ -59,14 +56,19 @@ void ApplyDeadzone(double *joystick, double input, double zone) {
 	if(input < 0) {
 		o *= -1;
 	}
-	if((o + 0.0) == 0.0) {
+
+	// Converts -0.0 to 0.0
+	/*if((o + 0.0) == 0.0) {
 		o = 0.0;
-	}
+	}*/
+	o += 0.0; // Faster version, same effect
+
 	*joystick = o;
 }
 
 void ApplyLimit(double *joystick, int limit)
 {
+	// This might be wrong
 	double o = (double)limit / 100.0;
 	if(*joystick > o)
 		*joystick = o;
